@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ListClientMVC.Models.ListItem>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    <form asp-controller="List" asp-action="New" method="Get">
+        Description:  <input type="text" name="Description" /> <button type="submit">New</button>
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Completed)
+                </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @if (item.Completed) {
+                <td>
+                    <a asp-action="ToggleComplete" asp-route-id="@item.ListItemId">Uncomplete</a>
+                </td>
+            } else {
+                <td>
+                    <a asp-action="ToggleComplete" asp-route-id="@item.ListItemId">Complete</a>
+                </td>
+            }
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.ListItemId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
