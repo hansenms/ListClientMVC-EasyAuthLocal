@@ -26,7 +26,7 @@ namespace ListClientMVC.Controllers
 
             var cont = await response.Content.ReadAsStringAsync();
 
-            ListItem[] items = JsonConvert.DeserializeObject<ListItem[]>(cont);
+            List<ListItem> items = JsonConvert.DeserializeObject<List<ListItem>>(cont);
 
             return View(items);
         }
