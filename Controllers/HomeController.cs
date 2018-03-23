@@ -19,6 +19,10 @@ namespace ListClientMVC.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            string accessToken = Request.Headers["x-ms-token-aad-access-token"];
+
+            ViewData["AccessToken"] = accessToken;
+            
             return View();
         }
 
