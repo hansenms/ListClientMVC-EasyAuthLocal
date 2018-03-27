@@ -9,14 +9,22 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
+using ListClientMVC.Services;
 
 namespace ListClientMVC.Controllers
 {
     public class ListController : Controller
     { 
+
+        private IEasyAuthProxy _easyAuthProxy;
+
+        public ListController(IEasyAuthProxy easyproxy) {
+            _easyAuthProxy = easyproxy;
+        }
+
         public async Task<IActionResult> Index()
         {
-            string accessToken = Request.Headers["x-ms-token-aad-access-token"];
+            string accessToken = _easyAuthProxy.Headers["x-ms-token-aad-access-token"];
 
             var client = new HttpClient();
 
@@ -38,7 +46,7 @@ namespace ListClientMVC.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            string accessToken = Request.Headers["x-ms-token-aad-access-token"];
+            string accessToken = _easyAuthProxy.Headers["x-ms-token-aad-access-token"];
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -50,7 +58,7 @@ namespace ListClientMVC.Controllers
         
         public async Task<IActionResult> New(string description)
         {
-            string accessToken = Request.Headers["x-ms-token-aad-access-token"];
+            string accessToken = _easyAuthProxy.Headers["x-ms-token-aad-access-token"];
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -66,7 +74,7 @@ namespace ListClientMVC.Controllers
 
         public async Task<IActionResult> ToggleComplete(int id)
         {
-            string accessToken = Request.Headers["x-ms-token-aad-access-token"];
+            string accessToken = _easyAuthProxy.Headers["x-ms-token-aad-access-token"];
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
